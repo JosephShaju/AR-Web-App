@@ -160,7 +160,7 @@
 		console.log(mouse.y);
 
 		raycaster.setFromCamera( mouse, camera )
-		var intersects = raycaster.intersectObjects( cube );
+		var intersects = raycaster.intersectObjects( scene.children );
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
 			print(intersects);
