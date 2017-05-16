@@ -162,6 +162,7 @@
 		var intersects = ray.intersectObjects ( objects );
 		if (intersects.length > 0){
 			intersects [ 0 ].object.materials[ 0 ].color.setHex( Math.random() * 0xffffff );
+			console.log('CLICKED ON AN OBJECT');
 		}
 
 		///EXPERIMENTAL//
