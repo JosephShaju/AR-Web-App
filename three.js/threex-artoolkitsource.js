@@ -146,7 +146,7 @@ THREEx.ArToolkitSource.prototype._initSourceWebcam = function(onReady) {
 				mandatory: {
 					maxWidth: _this.parameters.sourceWidth,
 					maxHeight: _this.parameters.sourceHeight,
-					facingMode: {exact: "environment"}
+					facingMode: {exact: "environment"} //force rear camera if available
 		    		}
 		  	}
                 }
