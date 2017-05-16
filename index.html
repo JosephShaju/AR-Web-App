@@ -126,7 +126,7 @@
 	var cubeMaterials = [
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({color:0x0000ff, transparent:true, opacity:1}), //this is the front facing side of the cube
+	    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
@@ -136,7 +136,7 @@
 	var cube = new THREE.Mesh(geometry, cubeMaterial);
 	cube.position.y	= 0.1; //distance from code
 	markerRoot.add( cube );
-	
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
 	//////////////////////////////////////////////////////////////////////////////////
