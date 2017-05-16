@@ -158,8 +158,11 @@
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 
 		raycaster.setFromCamera( mouse, camera )
-		var intersects = raycaster.intersectsObjects( objects, recursiveFlag );
+		var intersects = raycaster.intersectsObject( cube );
 		console.log(intersects);
+		if(intersects){
+			console.log("YOU CLICKED ON THE CUBE!!");
+		}
 		///EXPERIMENTAL//
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate')
