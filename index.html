@@ -151,6 +151,7 @@
 	//add event listener waiting for click
 	window.addEventListener('click', function(event){
 		//EXPERIMENTAL//
+
 		var raycaster = new THREE.Raycaster();
 		var mouse = new THREE.Vector2();
 
@@ -163,7 +164,7 @@
 		var intersects = raycaster.intersectObjects( scene.children );
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
-			print(intersects);
+			console.log(intersects);
 		}
 		///EXPERIMENTAL//
 
