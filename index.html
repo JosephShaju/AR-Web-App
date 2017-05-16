@@ -151,13 +151,15 @@
 	//add event listener waiting for click
 	window.addEventListener('click', function(event){
 		//EXPERIMENTAL//
-		console.log(event);
-		/*var projector = new THREE.Projector();
+
+		var projector = new THREE.Projector();
 		var vector = new THREE.Vector3(
 			(event.clientX / window.innerWidth) * 2 - 1,
 			- (event.clientY / window.innerHeight ) * 2 + 1,
 			0.5
 		);
+		console.log(vector);
+		/*
 		projector.vector.Unproject(vector, camera);
 		var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize());
 		var intersects = ray.intersectObjects ( objects );
