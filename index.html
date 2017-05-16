@@ -157,11 +157,9 @@
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		console.log(mouse.x);
-		console.log(mouse.y);
 
 		raycaster.setFromCamera( mouse, camera )
-		var intersects = raycaster.intersectObjects( scene.children );
+		var intersects = raycaster.intersectObject( cube );
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
 			console.log(intersects);
