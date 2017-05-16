@@ -148,6 +148,15 @@
 		stats.update();
 	})
 
+	//add event listener waiting for click
+	window.addEventListener('object_clicked', function(e) {
+		switch (e.detail.projection_id) {
+			case 'cube':
+				window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate')
+			break;
+		}
+	}, false);
+
 	// run the rendering loop
 	var lastTimeMsec= null
 	requestAnimationFrame(function animate(nowMsec){
