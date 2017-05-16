@@ -151,23 +151,15 @@
 	//add event listener waiting for click
 	window.addEventListener('click', function(event){
 		//EXPERIMENTAL//
+		var raycaster = new THREE.Raycaster();
+		var mouse = new THREE.Vector2();
 
-		var projector = new THREE.Projector();
-		var vector = new THREE.Vector3(
-			(event.clientX / window.innerWidth) * 2 - 1,
-			- (event.clientY / window.innerHeight ) * 2 + 1,
-			0.5
-		);
-		console.log(vector);
-		/*
-		projector.vector.Unproject(vector, camera);
-		var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize());
-		var intersects = ray.intersectObjects ( objects );
-		if (intersects.length > 0){
-			intersects [ 0 ].object.materials[ 0 ].color.setHex( Math.random() * 0xffffff );
-			console.log('CLICKED ON AN OBJECT');
-		}
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 
+		raycaster.setFromCamera( mouse, camera )
+		var intersects = raycaster.intersectsObjects( objects, recursiveFlag );
+		console.log(intersects);
 		///EXPERIMENTAL//
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate')
