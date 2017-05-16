@@ -40,7 +40,7 @@
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
-	var camera = new THREE.PerspectiveCamera(); //changed from just Camera()
+	var camera = new THREE.OrthographicCamera(); //changed from just Camera() to PerspectiveCamera() or OrthographicCamera()
 	scene.add(camera);
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +159,7 @@
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 
 		raycaster.setFromCamera( mouse, camera )
-		var intersects = raycaster.intersectObject( cube );
+		var intersects = raycaster.intersectObjects( scene.children );
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
 			console.log(intersects);
