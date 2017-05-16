@@ -40,7 +40,7 @@
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
-	var camera = new THREE.Camera(); //change from just Camera() to PerspectiveCamera() or OrthographicCamera()?
+	var camera = new THREE.OrthographicCamera(); //change from just Camera() to PerspectiveCamera() or OrthographicCamera()?
 	scene.add(camera);
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@
 	);
 
 	var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
-	var geometry = new THREE.CubeGeometry(2.5,0.12,2.5); //make it a short plane, not a cube
+	var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
 	// each cube side gets another color //TODO: CHANGE THIS
 	var cubeMaterials = [
