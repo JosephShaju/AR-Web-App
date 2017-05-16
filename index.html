@@ -113,7 +113,15 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
+	var texture = Three.ImageUtils.loadTexture("img/texture.PNG");
+	var materials = {
+		new THREE.MeshBasicMaterial({,map: texture});
+	}
+	var geometry = new THREE.CubeGeometry(1,1,0.1);
+	var child_poster = new THREE.Mesh(geometry, materials);
+	markerRoot.add( child_poster);
 	// add a torus knot
+	/*
 	var geometry	= new THREE.CubeGeometry(1,1,1);
 	var material	= new THREE.MeshNormalMaterial({
 		transparent : true,
@@ -133,6 +141,7 @@
 	onRenderFcts.push(function(){
 		mesh.rotation.x += 0.1
 	})
+	*/
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
