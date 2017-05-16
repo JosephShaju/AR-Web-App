@@ -134,6 +134,7 @@
 	// create a MeshFaceMaterial, allows cube to have different materials on each face
 	var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 	var cube = new THREE.Mesh(geometry, cubeMaterial);
+	cube.position.y	= 0.5;
 	markerRoot.add( cube );
 	/* MY ATTEMPT!!!!!
 	var texture = Three.ImageUtils.loadTexture("img/texture.PNG");
