@@ -112,14 +112,39 @@
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
+	var loader = new THREE.TextureLoader();
+	loader.load(
+		//resource URL
+		'img/texture.PNG',
+		//function when resource is loaded
+	);
 
+	var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
+	var geometry = new THREE.CubeGeometry(1,1,1);
+
+	// each cube side gets another color //TODO: CHANGE THIS
+	var cubeMaterials = [
+	    new THREE.MeshBasicMaterial({color:0x33AA55, transparent:true, opacity:0.8}),
+	    new THREE.MeshBasicMaterial({color:0x55CC00, transparent:true, opacity:0.8}),
+	    new THREE.MeshBasicMaterial({color:0x000000, transparent:true, opacity:0.8}),
+	    new THREE.MeshBasicMaterial({color:0x000000, transparent:true, opacity:0.8}),
+	    new THREE.MeshBasicMaterial({color:0x0000FF, transparent:true, opacity:0.8}),
+	    new THREE.MeshBasicMaterial({color:0x5555AA, transparent:true, opacity:0.8}),
+	];
+	// create a MeshFaceMaterial, allows cube to have different materials on each face
+	var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+	var cube = new THREE.Mesh(geometry, cubeMaterial);
+	markerRoot.add( cube );
+	/* MY ATTEMPT!!!!!
 	var texture = Three.ImageUtils.loadTexture("img/texture.PNG");
+	var geometry = new THREE.CubeGeometry(1,1,0.1);
 	var materials = {
 		new THREE.MeshBasicMaterial({color:0x00ff00, map:texture});
 	}
-	var geometry = new THREE.CubeGeometry(1,1,0.1);
+
 	var child_poster = new THREE.Mesh(geometry, materials);
-	markerRoot.add( child_poster);
+	*/
+
 	// add a torus knot
 	/*
 	var geometry	= new THREE.CubeGeometry(1,1,1);
