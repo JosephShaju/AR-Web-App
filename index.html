@@ -126,7 +126,7 @@
 	var cubeMaterials = [
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
+	    new THREE.MeshBasicMaterial({map: texture, transparent:true, opacity: 0.8}), //this is the front facing side of the cube
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
@@ -134,7 +134,7 @@
 	// create a MeshFaceMaterial, allows cube to have different materials on each face
 	var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 	var cube = new THREE.Mesh(geometry, cubeMaterial);
-	cube.position.y	= 0.1; //distance from code
+	cube.position.y	= 0.05; //distance from code
 	markerRoot.add( cube );
 
 	//////////////////////////////////////////////////////////////////////////////////
