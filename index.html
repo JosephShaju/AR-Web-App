@@ -156,13 +156,14 @@
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+		console.log(mouse.x);
+		console.log(mouse.y);
 
 		raycaster.setFromCamera( mouse, camera )
 		var intersects = raycaster.intersectObjects( cube );
-		console.log(intersects);
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
-			intersects[0].object.material.color.set(0xff0000);
+			print(intersects);
 		}
 		///EXPERIMENTAL//
 
