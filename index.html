@@ -120,13 +120,13 @@
 	);
 
 	var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
-	var geometry = new THREE.CubeGeometry(1,1,1);
+	var geometry = new THREE.CubeGeometry(1,1,0.1); //make it a short plane, not a cube
 
 	// each cube side gets another color //TODO: CHANGE THIS
 	var cubeMaterials = [
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({color:0x0000ff, transparent:true, opacity:0.1}),
+	    new THREE.MeshBasicMaterial({color:0x0000ff, transparent:true, opacity:1}), //this is the front facing side of the cube
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
