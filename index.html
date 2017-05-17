@@ -114,7 +114,9 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-		//FOR ASYNC TEXTURE LOADING:
+
+
+	//FOR ASYNC TEXTURE LOADING:
 	var loader = new THREE.TextureLoader();
 	loader.load(
 		//resource URL
@@ -139,6 +141,26 @@
 			EventsControls.attach( cube ); //add event controls EXPERIMENTAL 2
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
 		}
+		///EXPERIMENTAL 2
+		EventsControls = new EventsControls( camera, renderer.domElement );
+
+		EventsControls.attachEvent( 'mouseOver', function () {
+			console.log( 'the key at number ' + this.event.item + ' is selected' );
+
+		});
+
+		EventsControls.attachEvent( 'mouseOut', function () {
+			console.log('deselected');
+
+		});
+
+		EventsControls.attachEvent( 'onclick', function () {
+			window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate');
+			console.log( 'opening link' );
+
+		});
+		//END EXPERIMENTAL 2
+
 	);
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -157,24 +179,7 @@
 
 	/////INSERT EXPERIMENTAL 2 HERE////
 
-	EventsControls = new EventsControls( camera, renderer.domElement );
 
-	EventsControls.attachEvent( 'mouseOver', function () {
-		console.log( 'the key at number ' + this.event.item + ' is selected' );
-
-	});
-
-	EventsControls.attachEvent( 'mouseOut', function () {
-		console.log('deselected');
-
-	});
-
-	EventsControls.attachEvent( 'onclick', function () {
-		window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate');
-		console.log( 'opening link' );
-
-	});
-	//END EXPERIMENTAL 2
 	//EXPERIMENTAL//
 
 	/*function setFromCamera(raycaster, coords, origin){
