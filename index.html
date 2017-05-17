@@ -5,7 +5,7 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
-<script src="three.js/eventscontrol.js"></script> <!--only uncomment if better control needed-->
+<!--<script src="three.js/eventscontrol.js"></script>--> <!--only uncomment if better control needed-->
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -145,13 +145,8 @@
 	//	CLICK HANDLING
 	//////////////////////////////////////////////////
 
-
-
-
-
-
 	/////////////////////MANUAL RAYCASTING///////////////////////
-	/*
+
 	function onMouseDown(event){
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //TODO re-enable this once raycasting works, but for specific objects
@@ -187,7 +182,7 @@
 		clientY = e.touches[0].clientY;
 	}, false);
 	document.addEventListener('click', onMouseDown, false);
-	*/
+
 	///////////////////////END MANUAL RAYCASTING////////////////
 
 
@@ -203,13 +198,6 @@
 		renderer.render( scene, camera );
 		stats.update();
 	})
-
-
-	EventsControls = new EventsControls( camera, renderer.domElement );
-	EventsControls.attach(cube);
-	EventsControls.attachEvent('click', function(){
-		console.log('CUBE CLICKED!!!!');
-	});
 
 	// run the rendering loop
 	var lastTimeMsec= null
