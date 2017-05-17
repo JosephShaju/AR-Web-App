@@ -158,6 +158,8 @@
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+		mouse.x = ( event.targetTouches[0].pageX / window.innerWidth ) * 2 - 1;
+		mouse.y = ( event.targetTouches[0].pageY / window.innerHeight) * 2 + 1;
 		raycaster.setFromCamera(mouse, camera);
 
 		var intersects = raycaster.intersectObjects( scene.children, true );
@@ -166,7 +168,7 @@
 			console.log(intersects[0].object); //DEBUG
 			switch(intersects[ 0 ].object.name){
 				case 'cube':
-					console.log('HIT BOX!');
+					console.log('clicked cube!');
 					window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //TODO re-enable this once raycasting works, but for specific objects
 					break;
 				case 'SphereGeometry':
