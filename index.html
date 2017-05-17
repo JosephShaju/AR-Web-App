@@ -110,6 +110,13 @@
 		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
 	})
 
+	var markerRoot2 = new THREE.Group;
+	scene.add(markerRoot2);
+	var artoolkitMarker2 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot2, {
+		type : 'pattern',
+		patternUrl: THREEx.ArToolkitContext.baseURL + 'data/data/patt.hiro'
+	});
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +147,27 @@
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
 		}
 	);
+
+	var loader2 = new THREE.TextureLoader();
+	loader2.load(
+		'img/texture2.PNG',
+		function(texture){
+			var cubeMaterials2 = [
+				new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			];
+			var geometry2 = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+			var cubeMaterial2 = new THREE.MeshFaceMaterial(cubeMaterials);
+			var cube2 = new THREE.Mesh(geometry, cubeMaterial);
+			cube2.name = "cube2";
+			cube2.position.y	= 0.05; //distance from code
+			markerRoot2.add( cube2 ); //add finished cube to render queue on marker root
+		}
+	)
 
 	///////////////////////////////////////////////////
 	//	CLICK HANDLING
