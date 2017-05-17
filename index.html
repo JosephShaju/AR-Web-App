@@ -5,7 +5,7 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
-<!--<script src="three.js/eventscontrol.js"></script>--> <!--only uncomment if better control needed-->
+<script src="three.js/eventscontrol.js"></script> <!--only uncomment if better control needed-->
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -138,6 +138,7 @@
 			cube.name = "cube";
 			cube.position.y	= 0.05; //distance from code
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
+			scene.add(cube);
 		}
 	);
 
@@ -145,12 +146,17 @@
 	//	CLICK HANDLING
 	//////////////////////////////////////////////////
 
-	//function setFromCamera(raycaster, coords, origin){
-	//	raycaster.ray.origin.copy(camera.position);
-	//	raycaster.ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
-	//	console.log("ray at 0.5");
-	//}
+	EventsControls = new EventsControls( camera, renderer.domElement );
+	EventsControls.attach( scene.getObjectByName( 'cube' ));
+	EventsControls.attachEvent('click', function(){
+		console.log('CUBE CLICKED!!!!');
+	});
 
+
+
+
+	/////////////////////MANUAL RAYCASTING///////////////////////
+	/*
 	function onMouseDown(event){
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //TODO re-enable this once raycasting works, but for specific objects
@@ -186,9 +192,9 @@
 		clientY = e.touches[0].clientY;
 	}, false);
 	document.addEventListener('click', onMouseDown, false);
+	*/
+	///////////////////////END MANUAL RAYCASTING////////////////
 
-
-	//////////////END CLICK HANDLING
 
 
 	//////////////////////////////////////////////////////////////////////////////////
