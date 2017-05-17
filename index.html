@@ -140,7 +140,7 @@
 				name =  new THREE.Mesh(geometry, cubeMaterial);
 				name.name = name.toString();
 				name.position.y	= 0.05; //distance from code
-				markerName.add( name ); //add finished cube to render queue on marker root
+				markerRoot.add( name ); //add finished cube to render queue on marker root
 			}
 		);
 	}
