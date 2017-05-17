@@ -41,7 +41,7 @@
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
-	var camera = new THREE.OrthographicCamera(); //change from just Camera() to PerspectiveCamera() or OrthographicCamera()?
+	var camera = new THREE.PerspectiveCamera(); //change from just Camera() to PerspectiveCamera() or OrthographicCamera()?
 	scene.add(camera);
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -140,36 +140,32 @@
 		}
 	);
 
-	//////////////////////////////////////////////////////////////////////////////////
-	//		render the whole thing on the page
-	//////////////////////////////////////////////////////////////////////////////////
-	var stats = new Stats();
-	document.body.appendChild( stats.dom );
-	// render the scene
-	onRenderFcts.push(function(){
-		renderer.render( scene, camera );
-		stats.update();
-	})
+	///////////////////////////////////////////////////
+	//	CLICK HANDLING
+	//////////////////////////////////////////////////
 
-	//////////////CLICK HANDLING
-	//add event listener waiting for click
-	window.addEventListener('click', function(event){
+	function setFromCamera(raycaster, coords, origin){
+		raycaster.ray.origin.copy(camera.position);
+		raycaster.ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
+	}
 
-
-		//EXPERIMENTAL//
+	function onMouseDown(event){
 
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
 		setFromCamera(raycaster, mouse, camera);
+
 		var intersects = raycaster.intersectObjects( scene.children );
+
 		if(intersects.length > 0){
+			console.log(intersects); //DEBUG
 			switch(intersects[ 0 ].object.geometry.type){
 				case 'BoxGeometry':
 					console.log('HIT BOX!');
+					//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
 					break;
 				case 'SphereGeometry':
 					console.log('HIT SPHERE');
@@ -178,13 +174,26 @@
 					break;
 			}
 		}
-		///EXPERIMENTAL//
+		console.log('Down');
+	}
 
-		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
-
-	}, false);
+	//add event listener waiting for click
+	window.addEventListener('click', onMouseDown, false);
 
 	//////////////END CLICK HANDLING
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the whole thing on the page
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var stats = new Stats();
+	document.body.appendChild( stats.dom );
+	// render the scene
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+		stats.update();
+	})
 
 	// run the rendering loop
 	var lastTimeMsec= null
