@@ -144,11 +144,11 @@
 	//	CLICK HANDLING
 	//////////////////////////////////////////////////
 
-	function setFromCamera(raycaster, coords, origin){
-		raycaster.ray.origin.copy(camera.position);
-		raycaster.ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
-		console.log("ray at 0.5");
-	}
+	//function setFromCamera(raycaster, coords, origin){
+	//	raycaster.ray.origin.copy(camera.position);
+	//	raycaster.ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
+	//	console.log("ray at 0.5");
+	//}
 
 	function onMouseDown(event){
 
@@ -157,7 +157,7 @@
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		setFromCamera(raycaster, mouse, camera);
+		raycaster.setFromCamera(mouse, camera);
 
 		var intersects = raycaster.intersectObjects( scene.children, true );
 
