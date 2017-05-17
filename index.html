@@ -123,10 +123,32 @@
 
 	//FOR ASYNC TEXTURE LOADING:
 	function createCube(texturePath, name, markerName){
-		
+		var loader = new THREE.TextureLoader();
+		loader.load(
+			texturePath,
+			function(texture){
+				var cubeMaterials = [
+					new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
+			    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+				];
+				var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+				var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+				name =  new THREE.Mesh(geometry, cubeMaterial);
+				name.name = name.toString();
+				name.position.y	= 0.05; //distance from code
+				markerName.add( name ); //add finished cube to render queue on marker root
+			}
+		);
 	}
 
+	createCube('img/texture.PNG', cube, markerRoot);
+	createCube('img/texture2.PNG', cube2, markerRoot);
 
+/*
 	var loader = new THREE.TextureLoader();
 	loader.load(
 		//resource URL
@@ -173,6 +195,7 @@
 			markerRoot2.add( cube2 ); //add finished cube to render queue on marker root
 		}
 	)
+	*/
 
 	///////////////////////////////////////////////////
 	//	CLICK HANDLING
