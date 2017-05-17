@@ -112,25 +112,39 @@
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
-	var loader = new THREE.TextureLoader();
-	loader.load(
+
+	var cubeMaterials = [
+			new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			new THREE.MeshBasicMaterial({map: 0xff0000, transparent:true, opacity:0.1}), //this is the front facing side of the cube
+			new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+	];
+
+	//FOR ASYNC TEXTURE LOADING:
+	var textureLoader = new THREE.TextureLoader();
+	textureLoader.load(
 		//resource URL
 		'img/texture.PNG',
 		//function when resource is loaded
 	);
+	textureLoader.addEventListener('load', function(event){
+		// when texture loads, pull it in and change pop up face.
+		var cubeMaterials = [
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({map: event.content, transparent:false}), //this is the front facing side of the cube
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		];
+	});
 
-	var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
+	//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
 	var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
-	// each cube side gets another color //TODO: CHANGE THIS
-	var cubeMaterials = [
-	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
-	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-	];
+
 	// create a MeshFaceMaterial, allows cube to have different materials on each face
 	var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 	var cube = new THREE.Mesh(geometry, cubeMaterial);
