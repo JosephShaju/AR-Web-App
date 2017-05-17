@@ -137,8 +137,9 @@
 				];
 				var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 				var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+				nameToBe = name;
 				name =  new THREE.Mesh(geometry, cubeMaterial);
-				name.name = name.toString();
+				name.name = nameToBe;
 				name.position.y	= 0.05; //distance from code
 				markerName.add( name ); //add finished cube to render queue on marker root
 			}
