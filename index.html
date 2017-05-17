@@ -157,8 +157,8 @@
 		//EXPERIMENTAL//
 		var raycaster = new THREE.Raycaster();
 
-		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+		var mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		var mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 		var mouseVector = new THREE.Vector2(mouse.x, mouse.y);
 
 		raycaster.setFromCamera( mouseVector, camera )
