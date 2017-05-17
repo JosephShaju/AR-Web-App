@@ -5,6 +5,7 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
+<script src="three.js/eventscontrol.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -129,7 +130,7 @@
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 			];
 			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
-			var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
 			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
 			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
@@ -150,29 +151,40 @@
 		stats.update();
 	})
 
+	//////////////CLICK HANDLING
 	//add event listener waiting for click
 	window.addEventListener('click', function(event){
 
 
 		//EXPERIMENTAL//
-		var raycaster = new THREE.Raycaster();
 
-		var mouseX = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		var mouseY = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		var mouseVector = new THREE.Vector2(mouseX, mouseY);
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
 
-		raycaster.setFromCamera( mouseVector, camera )
-		var intersects = raycaster.intersectObjects( cube, true );
-		if(intersects){
-			console.log("YOU CLICKED ON THE CUBE!!");
-			console.log(intersects);
-			intersects = {};
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		setFromCamera(raycaster, mouse, camera);
+		var intersects = raycaster.intersectObjects( scene.children );
+		if(intersects.length > 0){
+			switch(intersects[ 0 ].object.geometry.type){
+				case 'BoxGeometry':
+					console.log('HIT BOX!');
+					break;
+				case 'SphereGeometry':
+					console.log('HIT SPHERE');
+					break;
+				default:
+					break;
+			}
 		}
 		///EXPERIMENTAL//
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
 
 	}, false);
+
+	//////////////END CLICK HANDLING
 
 	// run the rendering loop
 	var lastTimeMsec= null
