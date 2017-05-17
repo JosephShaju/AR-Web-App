@@ -5,7 +5,7 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
-<!--<script src="three.js/eventscontrol.js"></script>--> <!--only uncomment if better control needed-->
+<script src="three.js/eventscontrol.js"></script> <!--only uncomment if better control needed-->
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -153,8 +153,57 @@
 
 	//////////////CLICK HANDLING
 	//add event listener waiting for click
+	//EXPERIMENTAL2 - USING EVENTS CONTROLS //
+	var autoMaterial = new THREE.MeshPhongMaterial( { color: 0x6a2089 } );
+	var selMaterial = new THREE.MeshPhongMaterial( { color: 0x00d9ff } );
+
+	EventsControls = new EventsControls( camera, renderer.domElement );
+
+	EventsControls.attachEvent( 'mouseOver', function () {
+
+		this.container.style.cursor = 'pointer';
+		this.mouseOvered.material = selMaterial;
+		console.log( 'the key at number ' + this.event.item + ' is selected' );
+
+	});
+
+	EventsControls.attachEvent( 'mouseOut', function () {
+
+		this.container.style.cursor = 'auto';
+		this.mouseOvered.material = autoMaterial;
+
+	});
+
+	EventsControls.attachEvent( 'onclick', function () {
+
+		this.focused.position.y = -20;
+		setTimeout( 'scene.getObjectByName( "key' + String( this.event.item ) + '" ).position.y = 0', 100 );
+		console.log( 'the key at number ' + this.event.item + ' is pressed' );
+
+	});
+
+
+	var geometry = new THREE.BoxGeometry( 20, 20, 80 );
+
+	for ( var i = 0; i < 8; i ++ ) {
+
+		var key = new THREE.Mesh( geometry, autoMaterial );
+		key.position.set( i * 40 - 140, 0, 0 );
+		key.name = 'key' + String( i );
+		scene.add( key );
+		EventsControls.attach( key );
+
+	}
+
+}
+
+
+	//END EXPERIMENTAL 2//
+
+
 	//EXPERIMENTAL//
-	function setFromCamera(raycaster, coords, origin){
+
+	/*function setFromCamera(raycaster, coords, origin){
 		raycaster.ray.origin.copy (camera.position);
 		raycaster.ray.direction.set( coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
 	}
@@ -172,6 +221,7 @@
 			switch(intersects[ 0 ].object.geometry.type){
 				case 'BoxGeometry':
 					console.log('HIT BOX!');
+					//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
 					break;
 				case 'SphereGeometry':
 					console.log('HIT SPHERE');
@@ -187,12 +237,8 @@
 			console.log('nothing');
 		}
 	}
-	window.addEventListener('click', onMouseDown, false);
+	window.addEventListener('click', onMouseDown, false);*/
 		///EXPERIMENTAL//
-
-		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
-
-
 
 	//////////////END CLICK HANDLING
 
