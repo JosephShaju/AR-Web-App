@@ -153,11 +153,13 @@
 
 	//////////////CLICK HANDLING
 	//add event listener waiting for click
-	window.addEventListener('click', function(event){
+	//EXPERIMENTAL//
+	function setFromCamera(raycaster, coords, origin){
+		raycaster.ray.origin.copy (camera.position);
+		raycaster.ray.direction.set( coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
+	}
 
-
-		//EXPERIMENTAL//
-
+	function onMouseDown(event){
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
@@ -177,12 +179,15 @@
 				default:
 					break;
 			}
+			intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
 		}
+	}
+	document.addEventListener('mousedown', onMouseDown, false);
 		///EXPERIMENTAL//
 
 		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
 
-	}, false);
+
 
 	//////////////END CLICK HANDLING
 
