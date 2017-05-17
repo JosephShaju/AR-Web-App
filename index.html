@@ -180,10 +180,11 @@
 					console.log('nothing');
 					break;
 			}
-			else{
-				console.log('nothing');
-			}
+
 			intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
+		}
+		else{
+			console.log('nothing');
 		}
 	}
 	window.addEventListener('click', onMouseDown, false);
