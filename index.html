@@ -5,7 +5,6 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
-<!--<script src="three.js/eventscontrol.js"></script>--> <!--only uncomment if better control needed-->
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -22,12 +21,12 @@
 		// antialias	: true,
 		alpha: true
 	});
-	renderer.setClearColor(new THREE.Color('white'), 0)
+	renderer.setClearColor(new THREE.Color('white'), 0);
 	// renderer.setPixelRatio( 1/2 );
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.domElement.style.position = 'absolute'
-	renderer.domElement.style.top = '0px'
-	renderer.domElement.style.left = '0px'
+	renderer.domElement.style.position = 'absolute';
+	renderer.domElement.style.top = '0px';
+	renderer.domElement.style.left = '0px';
 	document.body.appendChild( renderer.domElement );
 
 	// array of functions for the rendering loop
@@ -37,7 +36,7 @@
 	var scene	= new THREE.Scene();
 
 	//////////////////////////////////////////////////////////////////////////////////
-	//		Initialize a basic camera
+	//		Initialize a basic camera in 3d scene
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
@@ -45,7 +44,7 @@
 	scene.add(camera);
 
 	////////////////////////////////////////////////////////////////////////////////
-	//          handle arToolkitSource
+	//          handle arToolkitSource, define media input
 	////////////////////////////////////////////////////////////////////////////////
 
 	var arToolkitSource = new THREEx.ArToolkitSource({
@@ -59,22 +58,23 @@
 		// to read from a video
 		// sourceType : 'video',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + 'data/videos/headtracking.mp4',
-	})
+	});
 
 	arToolkitSource.init(function onReady(){
 		// handle resize of renderer
-		arToolkitSource.onResize(renderer.domElement)
-	})
+		arToolkitSource.onResize(renderer.domElement);
+	});
 
 	// handle resize
 	window.addEventListener('resize', function(){
 		// handle arToolkitSource resize
-		arToolkitSource.onResize(renderer.domElement)
-	})
+		arToolkitSource.onResize(renderer.domElement);
+	});
+
+
 	////////////////////////////////////////////////////////////////////////////////
 	//          initialize arToolkitContext
 	////////////////////////////////////////////////////////////////////////////////
-
 
 	// create atToolkitContext
 	var arToolkitContext = new THREEx.ArToolkitContext({
@@ -83,33 +83,37 @@
 		maxDetectionRate: 30,
 		canvasWidth: 80*3,
 		canvasHeight: 60*3,
-	})
+	});
 	// initialize it
 	arToolkitContext.init(function onCompleted(){
 		// copy projection matrix to camera
 		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
-	})
+	});
 
 	// update artoolkit on every frame
 	onRenderFcts.push(function(){
 		if( arToolkitSource.ready === false )	return
 
 		arToolkitContext.update( arToolkitSource.domElement )
-	})
+	});
 
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Create a ArMarkerControls
 	////////////////////////////////////////////////////////////////////////////////
 
-	var markerRoot = new THREE.Group
-	scene.add(markerRoot)
+	//For each marker, run ARToolkit5/bin/mk_patt.exe and create a patt file for your marker. Then link it below.
+	//Add new markers for each image you want to appear.
+
+	//MARKER 1
+	var markerRoot = new THREE.Group;
+	scene.add(markerRoot);
 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
 		type : 'pattern',
 		patternUrl : THREEx.ArToolkitContext.baseURL + 'data/data/patt.wv'
-		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
-	})
+	});
 
+	//MARKER 2
 	var markerRoot2 = new THREE.Group;
 	scene.add(markerRoot2);
 	var artoolkitMarker2 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot2, {
@@ -121,7 +125,7 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-	//FOR ASYNC TEXTURE LOADING:
+	//Object generator, uses async texture loading
 	function createCube(texturePath, name, markerName){
 		var loader = new THREE.TextureLoader();
 		loader.load(
@@ -140,84 +144,39 @@
 				nameToBe = name;
 				name =  new THREE.Mesh(geometry, cubeMaterial);
 				name.name = nameToBe;
-				name.position.y	= 0.05; //distance from code
+				name.position.y	= 0.05; //distance from AR marker
 				markerName.add( name ); //add finished cube to render queue on marker root
 			}
 		);
 	}
 
+	//actually create objects. Add one of these for every new marker, with a different name
 	createCube('img/texture.PNG', 'cube', markerRoot);
 	createCube('img/texture2.PNG', 'cube2', markerRoot2);
 
-/*
-	var loader = new THREE.TextureLoader();
-	loader.load(
-		//resource URL
-		'img/texture.PNG',
-		//function when resource is loaded
-		function (texture){
-			var cubeMaterials = [
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-			];
-			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
-			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
-
-			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
-			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
-			var cube = new THREE.Mesh(geometry, cubeMaterial);
-			cube.name = "cube";
-			cube.position.y	= 0.05; //distance from code
-			markerRoot.add( cube ); //add finished cube to render queue on marker root
-		}
-	);
-
-	var loader2 = new THREE.TextureLoader();
-	loader2.load(
-		'img/texture2.PNG',
-		function(texture){
-			var cubeMaterials2 = [
-				new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-			];
-			var geometry2 = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
-			var cubeMaterials2 = new THREE.MeshFaceMaterial(cubeMaterials2);
-			var cube2 = new THREE.Mesh(geometry, cubeMaterials2);
-			cube2.name = "cube2";
-			cube2.position.y	= 0.05; //distance from code
-			markerRoot2.add( cube2 ); //add finished cube to render queue on marker root
-		}
-	)
-	*/
 
 	///////////////////////////////////////////////////
 	//	CLICK HANDLING
 	//////////////////////////////////////////////////
 
-	/////////////////////MANUAL RAYCASTING///////////////////////
-
+	//Manual THREE.js raycasting implementation using event handlers
 	function onMouseDown(event){
 
-		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //TODO re-enable this once raycasting works, but for specific objects
+		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //can be re-enabled to make every click head to the same location, bypassing raycasting
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
+		//update mouse vector from its position when the click/tap event takes place
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		raycaster.setFromCamera(mouse, camera);
+		raycaster.setFromCamera(mouse, camera); //cast ray in direction of mouse click
 
-		var intersects = raycaster.intersectObjects( scene.children, true );
+		var intersects = raycaster.intersectObjects( scene.children, true ); //see if ray intersects any rendered objects
 
 		if(intersects.length > 0){
-			console.log(intersects[0].object); //DEBUG
+			//console.log(intersects[0].object); //re-enable to debug, prints out object that is hit by ray
+
+			//handle different click cases based on which object is clicked (using object.name property)
 			switch(intersects[ 0 ].object.name){
 				case 'cube':
 					console.log('clicked cube!');
@@ -233,15 +192,12 @@
 		console.log('Click detected.');
 	}
 
-	//add event listener waiting for click
+	//add event listener waiting for mobile touch and translate coordinates to click
 	document.addEventListener('touchstart', function(e){
 		clientX = e.touches[0].clientX;
 		clientY = e.touches[0].clientY;
 	}, false);
 	document.addEventListener('click', onMouseDown, false);
-
-	///////////////////////END MANUAL RAYCASTING////////////////
-
 
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -257,17 +213,17 @@
 	})
 
 	// run the rendering loop
-	var lastTimeMsec= null
+	var lastTimeMsec= null;
 	requestAnimationFrame(function animate(nowMsec){
 		// keep looping
 		requestAnimationFrame( animate );
 		// measure time
-		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
-		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
-		lastTimeMsec	= nowMsec
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60;
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec);
+		lastTimeMsec	= nowMsec;
 		// call each update function
 		onRenderFcts.forEach(function(onRenderFct){
-			onRenderFct(deltaMsec/1000, nowMsec/1000)
+			onRenderFct(deltaMsec/1000, nowMsec/1000);
 		})
 	})
 </script></body>
