@@ -123,30 +123,31 @@
 	];
 
 	//FOR ASYNC TEXTURE LOADING:
-	var textureLoader = new THREE.TextureLoader();
-	textureLoader.load(
+	var loader = new THREE.TextureLoader();
+	loader.load(
 		//resource URL
 		'img/texture.PNG',
 		//function when resource is loaded
-		var cubeMaterials = [
+		function (texture){
+			var cubeMaterials = [
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({map: event.content, transparent:false}), //this is the front facing side of the cube
+		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		];
+			];
+		}
 	);
 
 	//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
 	var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
-
-	// create a MeshFaceMaterial, allows cube to have different materials on each face
+	// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
 	var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 	var cube = new THREE.Mesh(geometry, cubeMaterial);
 	cube.position.y	= 0.05; //distance from code
-	markerRoot.add( cube );
+	markerRoot.add( cube ); //add finished cube to render queue on marker root
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
