@@ -145,11 +145,7 @@
 	//	CLICK HANDLING
 	//////////////////////////////////////////////////
 
-	EventsControls = new EventsControls( camera, renderer.domElement );
-	EventsControls.attach( scene.getObjectByName( "cube", true));
-	EventsControls.attachEvent('click', function(){
-		console.log('CUBE CLICKED!!!!');
-	});
+
 
 
 
@@ -207,6 +203,13 @@
 		renderer.render( scene, camera );
 		stats.update();
 	})
+
+
+	EventsControls = new EventsControls( camera, renderer.domElement );
+	EventsControls.attach( scene.getObjectByName( "cube", true));
+	EventsControls.attachEvent('click', function(){
+		console.log('CUBE CLICKED!!!!');
+	});
 
 	// run the rendering loop
 	var lastTimeMsec= null
