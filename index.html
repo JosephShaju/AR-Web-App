@@ -114,49 +114,11 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-	//FOR ASYNC TEXTURE LOADING:
-	var loader = new THREE.TextureLoader();
-	loader.load(
-		//resource URL
-		'img/texture.PNG',
-		//function when resource is loaded
-		function (texture){
-			var cubeMaterials = [
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
-			];
-			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
-			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
-
-			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
-			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
-			var cube = new THREE.Mesh(geometry, cubeMaterial);
-			cube.position.y	= 0.05; //distance from code
-			markerRoot.add( cube ); //add finished cube to render queue on marker root
-		}
-	);
-
-	//////////////////////////////////////////////////////////////////////////////////
-	//		render the whole thing on the page
-	//////////////////////////////////////////////////////////////////////////////////
-	var stats = new Stats();
-	document.body.appendChild( stats.dom );
-	// render the scene
-	onRenderFcts.push(function(){
-		renderer.render( scene, camera );
-		stats.update();
-	})
-
-	//////////////CLICK HANDLING
-	//add event listener waiting for click
-	//EXPERIMENTAL2 - USING EVENTS CONTROLS //
+	//materials for testing
 	var autoMaterial = new THREE.MeshPhongMaterial( { color: 0x6a2089 } );
 	var selMaterial = new THREE.MeshPhongMaterial( { color: 0x00d9ff } );
 
+	//EXPERIMENTAL2 - USING EVENTS CONTROLS //
 	EventsControls = new EventsControls( camera, renderer.domElement );
 
 	EventsControls.attachEvent( 'mouseOver', function () {
@@ -181,24 +143,51 @@
 		console.log( 'the key at number ' + this.event.item + ' is pressed' );
 
 	});
+	//END EXPERIMENTAL 2
 
 
-	var geometry = new THREE.BoxGeometry( 20, 20, 80 );
-
-	for ( var i = 0; i < 8; i ++ ) {
-
-		var key = new THREE.Mesh( geometry, autoMaterial );
-		key.position.set( i * 40 - 140, 0, 0 );
-		key.name = 'key' + String( i );
-		scene.add( key );
-		EventsControls.attach( key );
-
-	}
-
-//}
 
 
-	//END EXPERIMENTAL 2//
+	//FOR ASYNC TEXTURE LOADING:
+	var loader = new THREE.TextureLoader();
+	loader.load(
+		//resource URL
+		'img/texture.PNG',
+		//function when resource is loaded
+		function (texture){
+			var cubeMaterials = [
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({map: texture, transparent:false}), //this is the front facing side of the cube
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
+			];
+			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
+			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+
+			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
+			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+			var cube = new THREE.Mesh(geometry, cubeMaterial);
+			cube.position.y	= 0.05; //distance from code
+			EventsControls.attach(cube); //add event controls
+			markerRoot.add( cube ); //add finished cube to render queue on marker root
+		}
+	);
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the whole thing on the page
+	//////////////////////////////////////////////////////////////////////////////////
+	var stats = new Stats();
+	document.body.appendChild( stats.dom );
+	// render the scene
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+		stats.update();
+	})
+
+	//////////////CLICK HANDLING
+	//add event listener waiting for click
 
 
 	//EXPERIMENTAL//
