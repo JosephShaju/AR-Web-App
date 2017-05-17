@@ -136,7 +136,7 @@
 			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 			var cube = new THREE.Mesh(geometry, cubeMaterial);
 			cube.position.y	= 0.05; //distance from code
-			EventsControls.attach(cube); //add event controls
+			EventsControls.map = cube; //add event controls
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
 		}
 	);
