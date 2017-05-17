@@ -122,6 +122,11 @@
 	//////////////////////////////////////////////////////////////////////////////////
 
 	//FOR ASYNC TEXTURE LOADING:
+	function createCube(texturePath, name, markerName){
+		
+	}
+
+
 	var loader = new THREE.TextureLoader();
 	loader.load(
 		//resource URL
@@ -161,8 +166,8 @@
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 			];
 			var geometry2 = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
-			var cubeMaterial2 = new THREE.MeshFaceMaterial(cubeMaterials);
-			var cube2 = new THREE.Mesh(geometry, cubeMaterial);
+			var cubeMaterials2 = new THREE.MeshFaceMaterial(cubeMaterials2);
+			var cube2 = new THREE.Mesh(geometry, cubeMaterials2);
 			cube2.name = "cube2";
 			cube2.position.y	= 0.05; //distance from code
 			markerRoot2.add( cube2 ); //add finished cube to render queue on marker root
