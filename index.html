@@ -130,7 +130,7 @@
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 			];
 			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
-			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+			var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
 			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
 			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
@@ -171,7 +171,7 @@
 	});
 
 	EventsControls.attachEvent( 'onclick', function () {
-		window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate')
+		window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate');
 		console.log( 'opening link' );
 
 	});
