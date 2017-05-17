@@ -162,7 +162,7 @@
 		var mouseVector = new THREE.Vector2(mouseX, mouseY);
 
 		raycaster.setFromCamera( mouseVector, camera )
-		var intersects = raycaster.intersectObjects( scene.children, true );
+		var intersects = raycaster.intersectObjects( cube, true );
 		if(intersects){
 			console.log("YOU CLICKED ON THE CUBE!!");
 			console.log(intersects);
