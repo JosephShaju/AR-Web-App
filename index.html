@@ -156,29 +156,23 @@
 	//add event listener waiting for click
 
 	/////INSERT EXPERIMENTAL 2 HERE////
-	
+
 	EventsControls = new EventsControls( camera, renderer.domElement );
 
 	EventsControls.attachEvent( 'mouseOver', function () {
 
-		this.container.style.cursor = 'pointer';
-		this.mouseOvered.material = selMaterial;
 		console.log( 'the key at number ' + this.event.item + ' is selected' );
 
 	});
 
 	EventsControls.attachEvent( 'mouseOut', function () {
-
-		this.container.style.cursor = 'auto';
-		this.mouseOvered.material = autoMaterial;
+		console.log('deselected');
 
 	});
 
 	EventsControls.attachEvent( 'onclick', function () {
-
-		this.focused.position.y = -20;
-		setTimeout( 'scene.getObjectByName( "ID: ' + String( this.event.item ) + '" ).position.y = 0', 100 );
-		console.log( 'the object ID: ' + this.event.item + ' is pressed' );
+		window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate')
+		console.log( 'opening link' );
 
 	});
 	//END EXPERIMENTAL 2
