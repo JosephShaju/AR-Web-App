@@ -135,6 +135,7 @@
 			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
 			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 			var cube = new THREE.Mesh(geometry, cubeMaterial);
+			cube.name = "cube";
 			cube.position.y	= 0.05; //distance from code
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
 		}
@@ -163,8 +164,8 @@
 
 		if(intersects.length > 0){
 			console.log(intersects[0].object); //DEBUG
-			switch(intersects[ 0 ].object.geometry.type){
-				case 'BoxGeometry':
+			switch(intersects[ 0 ].object.name){
+				case 'cube':
 					console.log('HIT BOX!');
 					window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate'); //TODO re-enable this once raycasting works, but for specific objects
 					break;
