@@ -114,41 +114,7 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-	//materials for testing
-	var autoMaterial = new THREE.MeshPhongMaterial( { color: 0x6a2089 } );
-	var selMaterial = new THREE.MeshPhongMaterial( { color: 0x00d9ff } );
-
-	//EXPERIMENTAL2 - USING EVENTS CONTROLS //
-	EventsControls = new EventsControls( camera, renderer.domElement );
-
-	EventsControls.attachEvent( 'mouseOver', function () {
-
-		this.container.style.cursor = 'pointer';
-		this.mouseOvered.material = selMaterial;
-		console.log( 'the key at number ' + this.event.item + ' is selected' );
-
-	});
-
-	EventsControls.attachEvent( 'mouseOut', function () {
-
-		this.container.style.cursor = 'auto';
-		this.mouseOvered.material = autoMaterial;
-
-	});
-
-	EventsControls.attachEvent( 'onclick', function () {
-
-		this.focused.position.y = -20;
-		setTimeout( 'scene.getObjectByName( "key' + String( this.event.item ) + '" ).position.y = 0', 100 );
-		console.log( 'the key at number ' + this.event.item + ' is pressed' );
-
-	});
-	//END EXPERIMENTAL 2
-
-
-
-
-	//FOR ASYNC TEXTURE LOADING:
+		//FOR ASYNC TEXTURE LOADING:
 	var loader = new THREE.TextureLoader();
 	loader.load(
 		//resource URL
@@ -189,7 +155,33 @@
 	//////////////CLICK HANDLING
 	//add event listener waiting for click
 
+	/////INSERT EXPERIMENTAL 2 HERE////
+	/EXPERIMENTAL2 - USING EVENTS CONTROLS //
+	EventsControls = new EventsControls( camera, renderer.domElement );
 
+	EventsControls.attachEvent( 'mouseOver', function () {
+
+		this.container.style.cursor = 'pointer';
+		this.mouseOvered.material = selMaterial;
+		console.log( 'the key at number ' + this.event.item + ' is selected' );
+
+	});
+
+	EventsControls.attachEvent( 'mouseOut', function () {
+
+		this.container.style.cursor = 'auto';
+		this.mouseOvered.material = autoMaterial;
+
+	});
+
+	EventsControls.attachEvent( 'onclick', function () {
+
+		this.focused.position.y = -20;
+		setTimeout( 'scene.getObjectByName( "ID: ' + String( this.event.item ) + '" ).position.y = 0', 100 );
+		console.log( 'the object ID: ' + this.event.item + ' is pressed' );
+
+	});
+	//END EXPERIMENTAL 2
 	//EXPERIMENTAL//
 
 	/*function setFromCamera(raycaster, coords, origin){
