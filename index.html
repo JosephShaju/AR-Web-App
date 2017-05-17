@@ -206,7 +206,7 @@
 
 
 	EventsControls = new EventsControls( camera, renderer.domElement );
-	EventsControls.attach( scene.getObjectByName( "cube", true));
+	EventsControls.attach( markerRoot.getObjectByName( "cube", true));
 	EventsControls.attachEvent('click', function(){
 		console.log('CUBE CLICKED!!!!');
 	});
