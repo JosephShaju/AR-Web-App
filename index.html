@@ -157,10 +157,8 @@
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
-		//mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		//mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		mouse.x = ( event.touches[0].pageX / window.innerWidth ) * 2 - 1;
-		mouse.y = -( event.touches[0].pageY / window.innerHeight) * 2 + 1;
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 		raycaster.setFromCamera(mouse, camera);
 
 		var intersects = raycaster.intersectObjects( scene.children, true );
@@ -183,7 +181,12 @@
 	}
 
 	//add event listener waiting for click
+	document.addEventListener('touchstart', function(e){
+		clientX = e.touches[0].clientX;
+		clientY = e.touches[0].clientY;
+	}, false);
 	document.addEventListener('click', onMouseDown, false);
+
 
 	//////////////END CLICK HANDLING
 
