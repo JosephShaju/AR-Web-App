@@ -146,7 +146,7 @@
 
 	function setFromCamera(raycaster, coords, origin){
 		raycaster.ray.origin.copy(camera.position);
-		raycaster.ray.direction.set(coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
+		raycaster.ray.direction.set(coords.x, coords.y).unproject(camera).sub(camera.position).normalize();
 	}
 
 	function onMouseDown(event){
