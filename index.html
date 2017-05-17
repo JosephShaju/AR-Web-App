@@ -158,7 +158,7 @@
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 		setFromCamera(raycaster, mouse, camera);
 
-		var intersects = raycaster.intersectObjects( scene.children );
+		var intersects = raycaster.intersectObjects( scene.children, true );
 
 		if(intersects.length > 0){
 			console.log(intersects); //DEBUG
@@ -178,7 +178,7 @@
 	}
 
 	//add event listener waiting for click
-	window.addEventListener('click', onMouseDown, false);
+	document.addEventListener('click', onMouseDown, false);
 
 	//////////////END CLICK HANDLING
 
