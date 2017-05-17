@@ -128,9 +128,6 @@
 		//resource URL
 		'img/texture.PNG',
 		//function when resource is loaded
-	);
-	textureLoader.addEventListener('load', function(event){
-		// when texture loads, pull it in and change pop up face.
 		var cubeMaterials = [
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
@@ -139,9 +136,9 @@
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 		];
-	});
+	);
 
-	//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG");
+	//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
 	var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
 
