@@ -5,7 +5,7 @@
 <script src="libs/stats.min.js"></script>
 <!-- ar.js -->
 <script src="libs/ar.min.js"></script>
-<script src="three.js/eventscontrol.js"></script> <!--only uncomment if better control needed-->
+<!--<script src="three.js/eventscontrol.js"></script>--> <!--only uncomment if better control needed-->
 <script>THREEx.ArToolkitContext.baseURL = '/ARapp2/'</script> <!--blank because of directory structure -->
 
 <body style='margin : 0px; overflow: hidden; font-family: Arial;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -114,8 +114,6 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-
-
 	//FOR ASYNC TEXTURE LOADING:
 	var loader = new THREE.TextureLoader();
 	loader.load(
@@ -132,35 +130,14 @@
 		    new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.1}),
 			];
 			//var texture = new THREE.ImageUtils.loadTexture("img/texture.PNG"); //force texture load synchronously if needed
-			var geometry = new THREE.CubeGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
+			var geometry = new THREE.BoxGeometry(1.5,0.12,1.5); //make it a short plane, not a cube
 
 			// create a MeshFaceMaterial from array of cube materials, allows cube to have different materials on each face
 			var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 			var cube = new THREE.Mesh(geometry, cubeMaterial);
 			cube.position.y	= 0.05; //distance from code
-			EventsControls.attach( cube ); //add event controls EXPERIMENTAL 2
 			markerRoot.add( cube ); //add finished cube to render queue on marker root
 		}
-		///EXPERIMENTAL 2
-		EventsControls = new EventsControls( camera, renderer.domElement );
-
-		EventsControls.attachEvent( 'mouseOver', function () {
-			console.log( 'the key at number ' + this.event.item + ' is selected' );
-
-		});
-
-		EventsControls.attachEvent( 'mouseOut', function () {
-			console.log('deselected');
-
-		});
-
-		EventsControls.attachEvent( 'onclick', function () {
-			window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate');
-			console.log( 'opening link' );
-
-		});
-		//END EXPERIMENTAL 2
-
 	);
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -176,18 +153,11 @@
 
 	//////////////CLICK HANDLING
 	//add event listener waiting for click
+	window.addEventListener('click', function(event){
 
-	/////INSERT EXPERIMENTAL 2 HERE////
 
+		//EXPERIMENTAL//
 
-	//EXPERIMENTAL//
-
-	/*function setFromCamera(raycaster, coords, origin){
-		raycaster.ray.origin.copy (camera.position);
-		raycaster.ray.direction.set( coords.x, coords.y, 0.5).unproject(camera).sub(camera.position).normalize();
-	}
-
-	function onMouseDown(event){
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
@@ -200,24 +170,19 @@
 			switch(intersects[ 0 ].object.geometry.type){
 				case 'BoxGeometry':
 					console.log('HIT BOX!');
-					//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
 					break;
 				case 'SphereGeometry':
 					console.log('HIT SPHERE');
 					break;
 				default:
-					console.log('nothing');
 					break;
 			}
-
-			intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
 		}
-		else{
-			console.log('nothing');
-		}
-	}
-	window.addEventListener('click', onMouseDown, false);*/
 		///EXPERIMENTAL//
+
+		//window.open('https://donate.worldvision.ca/collections/sponsorships', 'Donate') //TODO re-enable this once raycasting works, but for specific objects
+
+	}, false);
 
 	//////////////END CLICK HANDLING
 
